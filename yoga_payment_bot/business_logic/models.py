@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import date
+from django.utils import timezone
+from datetime import timedelta, datetime
 
 
 class Clients(models.Model):
@@ -23,7 +24,7 @@ class Clients(models.Model):
 
 class Subscriptions(models.Model):
     start_date = models.DateField(verbose_name='Дата первого подключения',
-                                  auto_now_add=True,
+                                  default=timezone.now,
                                   db_index=True)
     amount_of_days = models.SmallIntegerField(verbose_name=(
         'Количество дней в подписке'),)
@@ -35,12 +36,19 @@ class Subscriptions(models.Model):
                                on_delete=models.SET_NULL,
                                null=True,
                                verbose_name='Клиент')
+    expire_date = models.DateField(verbose_name='Дата окончания подписки',
+                                   default=timezone.now,
+                                   db_index=True)
 
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
         ordering = ('-start_date', )
-    
+
+    def save(self, *args, **kwargs):
+        self.expire_date = (self.start_date
+                            + timedelta(days=self.amount_of_days))
+        super(Subscriptions, self).save(*args, **kwargs)
 
     def __str__(self):
         return (f'{self.start_date}: продолжительность '

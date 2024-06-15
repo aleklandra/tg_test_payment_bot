@@ -1,24 +1,30 @@
 from django.contrib import admin
 from .models import Clients, Subscriptions
+from .forms import ClientsForm
 
 
 admin.site.empty_value_display = 'Не задано'
+
 
 class SubscriptionsInline(admin.StackedInline):
     model = Subscriptions
     extra = 0
 
 
+@admin.register(Clients)
 class ClientsAdmin(admin.ModelAdmin):
-    inlines = (
-        SubscriptionsInline,
-    )
+    form = ClientsForm
     list_display = (
         'name',
         'external_id',
-        'date_added'        
+        'date_added'       
+    )
+    inlines = (
+        SubscriptionsInline,
     )
 
+
+@admin.register(Subscriptions)
 class SubscriptionsAdmin(admin.ModelAdmin):
     list_display = (
         'client',
@@ -26,6 +32,7 @@ class SubscriptionsAdmin(admin.ModelAdmin):
         'amount_of_days',
         'product',
         'current_status',
+        'expire_date'
     )
     list_editable = (
         'amount_of_days',
@@ -35,7 +42,3 @@ class SubscriptionsAdmin(admin.ModelAdmin):
     search_fields = ('client', 'product') 
     list_filter = ('client', 'product',)
     list_display_links = ('client',)
-
-
-admin.site.register(Clients, ClientsAdmin)
-admin.site.register(Subscriptions, SubscriptionsAdmin)

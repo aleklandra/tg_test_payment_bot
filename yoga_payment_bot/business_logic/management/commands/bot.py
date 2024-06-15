@@ -1,10 +1,10 @@
 import logging
-import asyncio
 from django.core.management.base import BaseCommand
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 from .bot_rules.bot_commands import start, help_command, echo
 from .bot_rules.run_background import run_continuously
+from yoga_payment_bot import settings
 
 # Enable logging
 logging.basicConfig(
@@ -23,7 +23,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         application = (Application.builder()
-                       .token("6870926047:AAF0iwDlLXYwn0lSjTe8mllusx_3VN6qz4Q").build())
+                       .token(settings.BOT_TOKEN).build())
 
         # on different commands - answer in Telegram
         application.add_handler(CommandHandler("start", start))

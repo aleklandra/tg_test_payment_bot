@@ -5,9 +5,13 @@ from datetime import timedelta, datetime
 
 class Clients(models.Model):
     external_id = models.PositiveIntegerField(
-        verbose_name='Внешний ID клиента')
-    name = models.TextField(
+        verbose_name='Внешний ID клиента',
+        unique=True,
+        db_index=True)
+    first_name = models.TextField(
         verbose_name='Имя клиента')
+    last_name = models.TextField(
+        verbose_name='Фамилия клиента')
     date_added = models.DateTimeField(verbose_name='Дата первого подключения',
                                       auto_now_add=True,
                                       db_index=True)

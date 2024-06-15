@@ -1,10 +1,16 @@
+from asgiref.sync import sync_to_async
 from telegram import ForceReply, Update
 from telegram.ext import ContextTypes
+from business_logic.models import Clients
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
+    await Clients.objects.aupdate_or_create(external_id=user.id,
+                                            name=(f'{user.first_name}'
+                                                  + f'{user.last_name}')
+                                            )
     await update.message.reply_html(
         rf"Hi {user.mention_html()}!",
         reply_markup=ForceReply(selective=True),

@@ -9,7 +9,7 @@ def check_subscriptions():
                               .select_related('client')
                               .filter(expire_date=tomorrow)
                               .values_list('client__external_id',
-                                           'client__name',
+                                           'client__first_name',
                                            'start_date',
                                            'amount_of_days'))
     if tomorrow_expire_subs.count() == 0:

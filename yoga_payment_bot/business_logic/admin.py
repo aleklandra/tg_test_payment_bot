@@ -15,7 +15,9 @@ class SubscriptionsInline(admin.StackedInline):
 class ClientsAdmin(admin.ModelAdmin):
     form = ClientsForm
     list_display = (
-        'name',
+        'first_name',
+        'last_name',
+        'username',
         'external_id',
         'date_added'       
     )

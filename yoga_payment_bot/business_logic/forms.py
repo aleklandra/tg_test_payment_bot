@@ -8,8 +8,12 @@ class ClientsForm(forms.ModelForm):
         model = Clients
         fields = (
             'external_id',
-            'name'
+            'first_name',
+            'last_name',
+            'username'
         )
         widgets = {
-            'name': forms.TextInput
+            'first_name': forms.TextInput,
+            'last_name': forms.TextInput,
+            'username': forms.TextInput,
         }

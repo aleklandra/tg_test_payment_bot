@@ -11,7 +11,11 @@ class Clients(models.Model):
     first_name = models.TextField(
         verbose_name='Имя клиента')
     last_name = models.TextField(
-        verbose_name='Фамилия клиента')
+        verbose_name='Фамилия клиента',
+        null=True)
+    username = models.TextField(
+        verbose_name='ТГ ник клиента',
+        null=True)
     date_added = models.DateTimeField(verbose_name='Дата первого подключения',
                                       auto_now_add=True,
                                       db_index=True)
@@ -23,7 +27,7 @@ class Clients(models.Model):
     
 
     def __str__(self):
-        return self.name
+        return f'{self.username}: {self.first_name}'
 
 
 class Subscriptions(models.Model):

@@ -127,3 +127,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 BOT_TOKEN = os.getenv('TOKEN')
+BOT_PAY_CLIENT_ID = os.getenv('CLIENT_ID')
+BOT_REDIRECT_URI = os.getenv('REDIRECT_URI_BOT')
+BOT_PAY_TOKEN = os.getenv('PAY_TOKEN')
+BOT_PAY_RECIEVER = os.getenv('RECIEVER')
